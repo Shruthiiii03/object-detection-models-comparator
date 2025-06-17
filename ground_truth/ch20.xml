@@ -1,0 +1,26 @@
+<annotation>
+	<folder>chosen_dataset</folder>
+	<filename>ch20.png</filename>
+	<path>/home/shruthi/chosen_dataset/ch20.png</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>640</width>
+		<height>400</height>
+		<depth>1</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>bollard</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>388</xmin>
+			<ymin>215</ymin>
+			<xmax>401</xmax>
+			<ymax>244</ymax>
+		</bndbox>
+	</object>
+</annotation>
