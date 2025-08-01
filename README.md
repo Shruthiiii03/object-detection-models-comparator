@@ -58,3 +58,8 @@ python batch_iou.py
 ## Notes
 
 Predictions and images are expected to have matching filenames (e.g., image1.png, image1.json, image1.xml).
+
+## Results
+https://docs.google.com/spreadsheets/d/1WbzpGikOAm3LU_JgDsg4zi2mAp8uNKYf1eH8ei2YbQ4/edit?usp=sharing 
+
+View the results of the comparison between T-Rex, Gemini, DINO and SLIME. Make a copy of the sheets and add on to it to compare and log the results of more models. 
