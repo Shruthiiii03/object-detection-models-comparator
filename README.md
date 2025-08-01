@@ -33,7 +33,7 @@ This repository provides a lightweight tool to evaluate and compare the performa
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Clone the Repository
 
