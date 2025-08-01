@@ -1,0 +1,7 @@
+SLIME_predictions/
+dino_predictions/
+gemini_predictions/
+ground_truth/
+images/
+TREX_predictions/
+__pycache__/
