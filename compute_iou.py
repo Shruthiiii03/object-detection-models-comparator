@@ -32,45 +32,16 @@ def parse_xml(xml_path):
 
     return boxes
 
-#gemini outputs the transposed version of coordinates
-def parse_json(json_path, width, height):
-    with open(json_path, 'r') as f: 
+# parse_json for trex
+def parse_json(json_path):
+    with open(json_path, 'r') as f:
         data = json.load(f)
-
-    gemini_width = 1000
-    gemini_height = 1000
     
-    scaled_coords = []
-    for obj in data: 
-        box = obj["box_2d"]
+    boxes = []
+    for obj in data.get("objects", []):
+        boxes.append(obj["bbox"])
     
-        # Skip boxes that don't have exactly 4 values
-        if len(box) != 4:
-            print(f"Skipping invalid box: {box}")
-            continue
-
-        y1, x1, y2, x2 = box
-
-        x1 = x1 * width/gemini_width
-        y1 = y1 * height/gemini_height
-        x2 = x2 * width/gemini_width
-        y2 = y2 * height/gemini_height
-        scaled_coords.append([x1, y1, x2, y2])
-
-    return scaled_coords
-
-#parse json without transposing for dino 
-# def parse_json(json_path, width, height):
-#     with open(json_path, 'r') as f: 
-#         data = json.load(f)
-    
-#     boxes = []
-#     for obj in data:
-#         box = obj["box"]
-#         if len(box) == 4:
-#             boxes.append(box)
-
-#     return boxes
+    return boxes
 
 def compute_iou(box1,box2):
     x_left = max(box1[0], box2[0])
@@ -92,12 +63,12 @@ def compute_iou(box1,box2):
         return area_intersection / area_union
 
         
-def evaluate_iou(xml_path, json_path, image_path):
-    img = Image.open(image_path)
-    width, height = img.size
+def evaluate_iou(xml_path, json_path):
+    # img = Image.open(image_path)
+    # width, height = img.size
 
     gt_boxes = parse_xml(xml_path) if os.path.exists(xml_path) else []
-    pred_boxes = parse_json(json_path, width, height) if os.path.exists(json_path) else []
+    pred_boxes = parse_json(json_path) if os.path.exists(json_path) else []
 
     HIGH_IOUs = []
     used_preds = set()
@@ -140,3 +111,46 @@ def evaluate_iou(xml_path, json_path, image_path):
     FP = len(pred_boxes) - TP 
 
     return avg_iou, TP, FP, FN 
+
+
+# gemini outputs the transposed version of coordinates
+
+# def parse_json(json_path, width, height):
+#     with open(json_path, 'r') as f: 
+#         data = json.load(f)
+
+#     gemini_width = 1000
+#     gemini_height = 1000
+    
+#     scaled_coords = []
+#     for obj in data: 
+#         box = obj["box_2d"]
+    
+#         # Skip boxes that don't have exactly 4 values
+#         if len(box) != 4:
+#             print(f"Skipping invalid box: {box}")
+#             continue
+
+#         y1, x1, y2, x2 = box
+
+#         x1 = x1 * width/gemini_width
+#         y1 = y1 * height/gemini_height
+#         x2 = x2 * width/gemini_width
+#         y2 = y2 * height/gemini_height
+#         scaled_coords.append([x1, y1, x2, y2])
+
+#     return scaled_coords
+
+# parse json without transposing for dino 
+
+# def parse_json(json_path, width, height):
+#     with open(json_path, 'r') as f: 
+#         data = json.load(f)
+    
+#     boxes = []
+#     for obj in data:
+#         box = obj["box"]
+#         if len(box) == 4:
+#             boxes.append(box)
+
+#     return boxes
